@@ -1,0 +1,143 @@
+Version 0.6.5:
+    - Changed the logic for pausing to not treat it as a stop in the video
+    - Fixed problem where connections to trakt were closed before readin the responce
+    - Fixed syncing error that occured when a last played value was not a correctly formatted date
+    - Fixed #110, Coping with unicoded names in sql quiries
+    - Added polish translations
+    - Skin updates for Aeon Nox
+    - Fixed stupidity in playcount updater
+    - Probable solution for #101, #61 the freezing of xbmc when syncing seen back to xbmc.Removed all uses of httpapi for sql db access, replaced with smart (db finding) direct access.
+    - Fixed the list of tuples bug, where it talks about commas during syncing
+    - Season limit changed
+    - A possible fix for the error 'InterfaceError: an integer is required'
+    - Posible fix for divide by 0 error
+    - Added debug messages to aid in identifying quitting problems
+    - Fixed bugs with sync debug statements
+
+Version 0.6.4:
+    - Fixed broken syncing and scrobbling due to changes in xbmc json-rpc schema
+
+Version 0.6.3:
+    - Repository hotfix
+
+Version 0.6.2:
+    - Hotfix: bug that caused trakt connection reuse to throw and exception, this prevented tv show syncing
+    
+Version 0.6.1:
+    - Fixed (hopefully) major bug where Trakt Utilities prevented xbmc from closing, indefinatly, #91
+    - Fixed major bug where items that where already marked as seen where not added to the collection #90
+    - Fixed problems with changed json versions in xbmc #86 & #88 
+    - Fixed misc bugs #63, #67, #69, #74, #75, #86, #87
+    - Added option to automatically clean the movie/tv collection on trakt
+    - Scrobbling seems stable now and Trakt Utilities can be used safely by itself
+
+Version 0.6.0:
+    - Added experimental scrobbling abilities (disabled by default)
+        eventually this will mean you can run Trakt Utilities by itself
+    - Support for newer jsonrpc notifications
+    - Bugfix: "'NoneType' object is not iterable" error fixed by internal refactoring
+    - trakt login details checked at startup and settings shown if missing or incorrect
+    - Bugfix: rating dialog only appearing for items started after auto syncronisation compleated
+    - Option to change the required percent viewed for rating dialog to appear
+    - Instant syncronisation of changes to the 'watched' status in standard xmbc libraries
+    - Option to diable rating dialogs during playlists that contain more than one item
+    - Context menus for Movie and TV Show windows (eg watchlist, trending and recommended)
+        including options for rating and changing the watchlist status
+    - Added status tags to TV Shows in the relevent windows
+    - Rating dialogs now show the current rating status and allow unrating
+
+Version 0.5.2:
+    - fixed several bugs (for more information see tickets #35 #39 #42 #43 #47 and #49 on git)
+    - switched from own simplejson to xbmc's simplejson:
+    - Skin Aeon-Nox is now integrated. (Thanks: Big Noid)
+    - Support for newer nighlties that require arbitrary resolution definitions
+    - Improved handling of responces from the trakt api
+    - Improved handling of timeouts when talking to trakt api
+    - Ability to rate whole TV shows from current rating dialog
+
+Version 0.5.1:
+    - rating dialog that appears after watching items is now optional
+    - Can now rate whole tv shows after watching an episode
+    - Bugfix: inability to access trending movies
+    - Bugfix: items played via trakt utilities weren't added to the playlist correctly
+    - Bugfix: using trakt utilities to play a movie that is no longer in the library fails silently
+    - Better debug output during communication errors with trakt api
+
+Version 0.5.0:
+    - rating dialog after watching a movie or tv episode
+    - Bugfix: no duplicates in movie lists after watching
+    - Bugfix: fixed an issue with setting tv show episodes as seen on xbmc
+    - local tag on movies added, that indicate local presence
+    - watchlist tag on movies added
+    - trakt utilities icon added
+
+Version 0.4.2:
+    - Bugfix release: movies can now be played again
+
+Version 0.4.1:
+    - switched from sqlite to httpapi-sql queries (support for external mysql servers)
+    - added menu for:
+          - watchlist tv shows
+          - trending tv shows
+          - recommended movies
+          - recommended tv shows
+
+Version 0.4.0:
+    - movies can directly played from watchlist / trending window (othrayte)
+    - added menu for movies: watchlist / trending (manromen / othrayte)
+    - catching some more possible errors / added some debug output
+    - changed some get functions to push functions (for protected users) (othrayte))
+    - accessing watchlists for protected accounts (othrayte)
+
+Version 0.3.1:
+    - Bugfix Update
+
+Version 0.3.0:
+    - menu restructured
+    - you can show your watchlist now
+    - updated compatibility to new json rpc since nightly build April, 5. 2011
+
+Version 0.2.2:
+    - some bugfixes
+    - added auto update movie / tvshow collection at startup
+
+Version 0.2.1:
+    - small bugfix
+
+Version 0.2.0:
+    - added auto sync seen movies / tv shows at startup
+    - added warning for clean collection
+
+Version 0.1.6:
+    - fixed a KeyError
+
+Version 0.1.5:
+    - added german language
+    - fixed a NameError
+    - fixed a Database path issue
+
+Version 0.1.4:
+    - added update functionality
+
+Version 0.1.3:
+    - some small fixes (some possible tcp timeouts etc.)
+    - correction of some spelling
+    - fixed an linux issue (extension usage in addon.xml)
+
+Version 0.1.2:
+    - fixed some possible freeze
+
+Version 0.1.1:
+    - fixed some possible KeyError's
+    - no need of API Key from user anymore
+
+Version 0.1:
+    - Sync seen TVShows with Trakt
+    - Sync seen Movies with Trakt
+    - Update / Clean Movie Collection
+    - Update / Clean TVShow Collection
+
+ToDo for future versions:
+    - option to ask for rating at movie finished
+    - option to ask for rating at tvshow episode finished
+        

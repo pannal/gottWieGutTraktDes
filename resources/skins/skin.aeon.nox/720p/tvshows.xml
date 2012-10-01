@@ -1,0 +1,388 @@
+<window>
+  <defaultcontrol always="true">101</defaultcontrol>
+
+  <animation effect="fade" time="250">WindowOpen</animation>
+  <animation effect="fade" time="250">WindowClose</animation>
+
+  <controls>
+    <control type="image" id="102">
+      <description>Background</description>
+      <posx>0</posx>
+      <posy>0</posy>
+      <width>1280</width>
+      <height>800</height>
+      <aspectratio>scale down</aspectratio>
+    </control>
+    <control type="group">
+      <animation effect="fade" time="250">WindowOpen</animation>
+      <animation effect="fade" time="250">WindowClose</animation>
+      <control type="image">
+        <posx>0</posx>
+        <posy>315</posy>
+        <width>1280</width>
+        <height>405</height>
+        <texture>views/showcase_floor.png</texture>
+      </control>
+      <control type="image">
+        <posy>-138</posy>
+        <width>1280</width>
+        <height>720</height>
+        <texture>common/black.png</texture>
+        <colordiffuse>aaffffff</colordiffuse>
+        <animation effect="fade" start="0" end="100" time="550" delay="200">Visible</animation>
+        <animation effect="fade" start="100" end="0" time="100">Hidden</animation>
+        <visible>Skin.HasSetting(darkinfopane)</visible>
+      </control>
+      <control type="image">
+        <posx>-70</posx>
+        <posy>0</posy>
+        <width>464</width>
+        <height>720</height>
+        <texture>views/showcase_vignette.png</texture>
+        <colordiffuse>vignette</colordiffuse>
+        <visible>true</visible>
+      </control>
+      <control type="image">
+        <posx>886</posx>
+        <posy>0</posy>
+        <width>464</width>
+        <height>720</height>
+        <visible>true</visible>
+        <colordiffuse>vignette</colordiffuse>
+        <texture flipx="true">views/showcase_vignette.png</texture>
+      </control>
+      <include>Neon_Floor</include>
+    </control>
+
+    <control type="group">
+      <include>Animation_OpenCloseZoom_New</include>
+      <control type="image">
+        <posx>25</posx>
+        <posy>45</posy>
+        <width>1230</width>
+        <height>692</height>
+        <texture>wall/wall_bg.png</texture>
+      </control>
+      <control type="image">
+        <posx>25</posx>
+        <posy>45</posy>
+        <width>1230</width>
+        <height>692</height>
+        <texture>wall/wall_bg_reflection.png</texture>
+      </control>
+    </control>
+
+    <control type="group">
+      <posy>-20</posy>
+      <include>Animation_OpenCloseZoom</include>
+      <control type="panel" id="110">
+        <posx>40</posx>
+        <posy>103</posy>
+        <width>760</width>
+        <height>538</height>
+        <onleft>60</onleft>
+        <onright>60</onright>
+        <onup>110</onup>
+        <ondown>110</ondown>
+        <preloaditems>4</preloaditems>
+        <scrolltime>150</scrolltime>
+        <visible>true</visible>
+        <viewtype label="$LOCALIZE[31283]">icon</viewtype>
+        <pagecontrol>60</pagecontrol>
+        <itemlayout height="179" width="126">
+          <control type="group">
+            <animation effect="fade" end="90" time="0" condition="true">Conditional</animation>
+            <control type="image">
+              <posx>0</posx>
+              <posy>0</posy>
+              <width>126</width>
+              <height>179</height>
+              <aspectratio scalediffuse="false">scale</aspectratio>
+              <fadetime>IconCrossfadeTime2</fadetime>
+              <texture background="true">$INFO[ListItem.Icon]</texture>
+              <bordertexture border="5">thumbs/bordershadow4.png</bordertexture>
+              <bordersize>5</bordersize>
+            </control>
+            <control type="image">
+              <posx>81.5</posx>
+              <posy>5</posy>
+              <width>40</width>
+              <height>40</height>
+              <fadetime>IconCrossfadeTime2</fadetime>
+              <texture>local.png</texture>
+              <visible>ListItem.Property(Available)</visible>
+            </control>
+            <control type="image">
+              <posx>81.5</posx>
+              <posy>5</posy>
+              <width>40</width>
+              <height>40</height>
+              <fadetime>IconCrossfadeTime2</fadetime>
+              <texture>watchlist.png</texture>
+              <visible>ListItem.Property(Watchlist)</visible>
+            </control>
+          </control>
+        </itemlayout>
+        <focusedlayout height="179" width="126">
+          <control type="image">
+            <posx>0</posx>
+            <posy>0</posy>
+            <width>126</width>
+            <height>179</height>
+            <aspectratio scalediffuse="false">scale</aspectratio>
+            <fadetime>IconCrossfadeTime2</fadetime>
+            <texture background="true">$INFO[ListItem.Icon]</texture>
+            <bordertexture border="5">featured/tile_fo.png</bordertexture>
+            <bordersize>5</bordersize>
+          </control>
+          <control type="image">
+            <posx>81.5</posx>
+            <posy>5</posy>
+            <width>40</width>
+            <height>40</height>
+            <fadetime>IconCrossfadeTime2</fadetime>
+            <texture>local.png</texture>
+            <visible>ListItem.Property(Available)</visible>
+          </control>
+          <control type="image">
+            <posx>81.5</posx>
+            <posy>5</posy>
+            <width>40</width>
+            <height>40</height>
+            <fadetime>IconCrossfadeTime2</fadetime>
+            <texture>watchlist.png</texture>
+            <visible>ListItem.Property(Watchlist)</visible>
+          </control>
+        </focusedlayout>
+
+      </control>
+      <control type="scrollbar" id="60">
+        <posx>1230</posx>
+        <posy>103</posy>
+        <width>6</width>
+        <height>538</height>
+        <showonepage>false</showonepage>
+        <include>CommonVerticalScrollbar</include>
+        <onleft>110</onleft>
+        <onright>9000</onright>
+      </control>
+      <control type="group">
+        <visible>true</visible>
+        <control type="label" id="107">
+          <include>HiddenObject</include>
+        </control>
+        <control type="label" id="108">
+          <include>HiddenObject</include>
+        </control>
+        <control type="label" id="111">
+          <include>HiddenObject</include>
+        </control>
+      </control>
+      <control type="group">
+        <posx>-15</posx>
+        <control type="label" id="103">
+          <posx>840</posx>
+          <posy>103</posy>
+          <height>13</height>
+          <width>380</width>
+          <font>Font_Bold25_Caps</font>
+          <textcolor>white2</textcolor>
+          <scroll>true</scroll>
+        </control>
+        <control type="image">
+          <posx>830</posx>
+          <posy>123</posy>
+          <height>40</height>
+          <width>400</width>
+          <texture>osd/osd_settings_buttonnf.png</texture>
+        </control>
+        <control type="group">
+          <control type="label" id="109">
+            <posx>840</posx>
+            <posy>135</posy>
+            <height>13</height>
+            <width>380</width>
+            <font>Font_Reg18</font>
+            <textcolor>abFFFFFF</textcolor>
+            <scroll>true</scroll>
+          </control>
+          <control type="label" id="112">
+            <posx>1220</posx>
+            <posy>685</posy>
+            <height>13</height>
+            <width>460</width>
+            <font>Font_Reg18</font>
+            <align>right</align>
+            <textcolor>floor</textcolor>
+            <scroll>true</scroll>
+          </control>
+          <control type="label">
+            <posx>1220</posx>
+            <posy>710</posy>
+            <height>13</height>
+            <width>460</width>
+            <font>Font_Reg18</font>
+            <align>right</align>
+            <textcolor>floor</textcolor>
+            <label>$INFO[Control.GetLabel(107)]$INFO[Control.GetLabel(108), | ]$INFO[Control.GetLabel(111), | ]</label>
+          </control>
+          <control type="textbox" id="104">
+            <posx>840</posx>
+            <posy>170</posy>
+            <width>380</width>
+            <height>230</height>
+            <font>Font_Reg18</font>
+            <align>justify</align>
+            <textcolor>white6</textcolor>
+            <autoscroll delay="8000" time="2000" repeat="8000">Skin.HasSetting(AutoScroll)</autoscroll>
+          </control>
+        </control>
+        <control type="group">
+          <posx>835</posx>
+          <posy>415</posy>
+          <control type="image">
+            <posx>-15</posx>
+            <posy>-15</posy>
+            <width>412</width>
+            <height>245</height>
+            <texture>common/black.png</texture>
+            <bordertexture border="15">home/nowplaying/OverlayDialogBackground.png</bordertexture>
+            <bordersize>15</bordersize>
+          </control>
+          <control type="image">
+            <posx>0</posx>
+            <posy>0</posy>
+            <width>382</width>
+            <height>215</height>
+            <fadetime>IconCrossfadeTime</fadetime>
+            <aspectratio>scale</aspectratio>
+            <texture background="true">$INFO[Control.GetLabel(102)]</texture>
+            <visible>!Player.Hasvideo</visible>
+            <include>Animation_VisibleChange200</include>
+          </control>
+          <control type="videowindow" id="40001">
+            <posx>0</posx>
+            <posy>0</posy>
+            <width>382</width>
+            <height>215</height>
+            <visible>Player.Hasvideo + !VideoPlayer.IsFullscreen</visible>
+          </control>
+        </control>
+      </control>
+    </control>
+
+
+
+
+
+    <control type="group">
+      <description>Breadcrumbs</description>
+      <visible>Skin.HasSetting(breadcrumb)</visible>
+      <include>Animation_HideBreadCrumbs</include>
+      <include>Breadcrumbs_BackBar</include>
+      <control type="grouplist">
+        <posx>15</posx>
+        <posy>0</posy>
+        <width>500</width>
+        <align>left</align>
+        <visible></visible>
+        <itemgap>0</itemgap>
+        <orientation>horizontal</orientation>
+        <include>Animation_HideBreadCrumbs</include>
+        <control type="image">
+          <description>Items Icon</description>
+          <posx>0</posx>
+          <posy>0</posy>
+          <width>36</width>
+          <height>32</height>
+          <aspectratio>keep</aspectratio>
+          <texture>common/tv_icon.png</texture>
+          <colordiffuse>white2</colordiffuse>
+          <animation effect="slide" start="0,0" end="-6,1" time="0" condition="true">Conditional</animation>
+        </control>
+        <control type="label">
+          <include>BreadcrumbsLabel</include>
+          <label>$LOCALIZE[20343]</label>
+        </control>
+      </control>
+      <control type="grouplist">
+        <posx>0</posx>
+        <posy>6</posy>
+        <width>1280</width>
+        <align>center</align>
+        <aligny>center</aligny>
+        <itemgap>10</itemgap>
+        <visible>!IsEmpty(Container(110).NumItems)</visible>
+        <orientation>horizontal</orientation>
+        <animation effect="fade" time="400" delay="400">Visible</animation>
+        <animation effect="fade" time="400">Hidden</animation>
+        <control type="label">
+          <posx>0</posx>
+          <posy>0</posy>
+          <height>22</height>
+          <aligny>center</aligny>
+          <width min="10" max="1280">auto</width>
+          <font>Font_Condensed20</font>
+          <label>$VAR[BreadcrumbsTrailerVar]</label>
+          <textcolor>bclabel</textcolor>
+          <shadowcolor>bcshadow</shadowcolor>
+          <scroll>false</scroll>
+          <animation effect="slide" start="0,0" end="0,-6" time="0" condition="true">Conditional</animation>
+          <visible>!IsEmpty(ListItem.Trailer)</visible>
+        </control>
+        <control type="image">
+          <description>Items Icon</description>
+          <posx>0</posx>
+          <posy>0</posy>
+          <width>20</width>
+          <height>15</height>
+          <aspectratio>stretch</aspectratio>
+          <texture>breadcrumbs/items.png</texture>
+          <colordiffuse>bcicon</colordiffuse>
+        </control>
+        <control type="label">
+          <posx>0</posx>
+          <posy>0</posy>
+          <height>22</height>
+          <aligny>center</aligny>
+          <width min="10" max="1280">auto</width>
+          <font>Font_Condensed20</font>
+          <label>$INFO[Container(110).NumItems] $LOCALIZE[31025]</label>
+          <textcolor>bclabel</textcolor>
+          <shadowcolor>bcshadow</shadowcolor>
+          <scroll>false</scroll>
+          <animation effect="slide" start="0,0" end="0,-6" time="0" condition="true">Conditional</animation>
+        </control>
+        <control type="image">
+          <description>Items Icon</description>
+          <posx>0</posx>
+          <posy>0</posy>
+          <width>20</width>
+          <height>15</height>
+          <aspectratio>stretch</aspectratio>
+          <texture>breadcrumbs/pages.png</texture>
+          <colordiffuse>bcicon</colordiffuse>
+          <animation effect="fade" time="400" delay="400">Visible</animation>
+          <animation effect="fade" time="400">Hidden</animation>
+        </control>
+        <control type="label">
+          <posx>0</posx>
+          <posy>0</posy>
+          <height>22</height>
+          <aligny>center</aligny>
+          <width min="10" max="1280">auto</width>
+          <font>Font_Condensed20</font>
+          <label>$LOCALIZE[31024] $INFO[Container(110).CurrentPage]/$INFO[Container(110).NumPages]</label>
+          <textcolor>bclabel</textcolor>
+          <shadowcolor>bcshadow</shadowcolor>
+          <scroll>false</scroll>
+          <align>left</align>
+          <animation effect="slide" start="0,0" end="0,-6" time="0" condition="true">Conditional</animation>
+        </control>
+      </control>
+      <include>Breadcrumbs_Furniture</include>
+    </control>
+    <include>Furniture_NowPlayingWidget</include>
+    <include condition="Skin.HasSetting(globaltime)">Furniture_Clock</include>
+  </controls>
+</window>
