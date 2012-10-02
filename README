@@ -2,6 +2,9 @@
 A fork of Trakt Utilities to make it more hassle-free and less stalky.
 All credit goes to the original authors.
 
+Due to the huge limitations Trakt gives us, the features are very limited in terms of:
+* the time a seen state is synced to Trakt and the corresponding time Trakt shows the seen status (which is the time the sync took place)
+* the ability to change existing context menus (which is non-existant at the moment as it seems)
 
 Kthxbye.
 
