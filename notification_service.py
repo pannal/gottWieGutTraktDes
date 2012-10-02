@@ -76,13 +76,8 @@ class NotificationService(threading.Thread):
                 # Forward notification to functions
                 if 'method' in data and 'params' in data and 'sender' in data['params'] and data['params']['sender'] == 'xbmc':
                     if data['method'] == 'Player.OnStop':
-                        scrobbler.playbackEnded()
+                        scrobbler.playbackEnded() # this is using syncIncreasePlayCount already
                         Debug("pb ended", getSync_after_x())
-                        if getSync_after_x():
-                            Debug("syncing")
-                            syncAfterX()
-                            if 'playcount' in data['params']['data']:
-                                syncIncreasePlayCount()
 
                     elif data['method'] == 'Player.OnPlay':
                         if 'data' in data['params'] and 'item' in data['params']['data'] and 'id' in data['params']['data']['item'] and 'type' in data['params']['data']['item']:

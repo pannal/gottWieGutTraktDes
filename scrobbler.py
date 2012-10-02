@@ -165,13 +165,16 @@ class Scrobbler(threading.Thread):
         __settings__ = xbmcaddon.Addon( "script.GottWieGutTraktDes" ) #read settings again, encase they have changed
         scrobbleMinViewTimeOption = __settings__.getSetting("scrobble_min_view_time")
         sync_after_plays_considered_seen = __settings__.getSetting("sync_after_plays_considered_seen")
+        watchedPerc = (self.watchedTime/self.totalTime)*100
 
-        if (self.watchedTime/self.totalTime)*100>=float(sync_after_plays_considered_seen):
-            # we've played a file and consider it seen
-            syncIncreasePlayCount()
-            syncAfterX()
+        if watchedPerc>=float(sync_after_plays_considered_seen):
+            if getSync_after_x():
+                # we've played a file and consider it seen
+                syncIncreasePlayCount()
+                Debug("syncing")
+                syncAfterX()
 
-        if (self.watchedTime/self.totalTime)*100>=float(scrobbleMinViewTimeOption):
+        if watchedPerc>=float(scrobbleMinViewTimeOption):
             self.scrobble()
 
         else:
