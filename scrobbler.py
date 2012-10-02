@@ -25,6 +25,8 @@ debug = __settings__.getSetting( "debug" )
 
 headers = {"Content-type": "application/x-www-form-urlencoded", "Accept": "text/plain"}
 
+from extendedSettings import *
+
 class Scrobbler(threading.Thread):
     totalTime = 1
     watchedTime = 0
@@ -104,6 +106,7 @@ class Scrobbler(threading.Thread):
                 if 'type' in self.curVideo and 'id' in self.curVideo:
                     self.check()
                     ratingCheck(self.curVideo, self.watchedTime, self.totalTime, self.playlistLength)
+
                 self.watchedTime = 0
             self.startTime = 0
             
@@ -161,8 +164,15 @@ class Scrobbler(threading.Thread):
     def check(self):
         __settings__ = xbmcaddon.Addon( "script.GottWieGutTraktDes" ) #read settings again, encase they have changed
         scrobbleMinViewTimeOption = __settings__.getSetting("scrobble_min_view_time")
-        
+        sync_after_plays_considered_seen = __settings__.getSetting("sync_after_plays_considered_seen")
+
+        if (self.watchedTime/self.totalTime)*100>=float(sync_after_plays_considered_seen):
+            # we've played a file and consider it seen
+            syncIncreasePlayCount()
+            syncAfterX()
+
         if (self.watchedTime/self.totalTime)*100>=float(scrobbleMinViewTimeOption):
             self.scrobble()
+
         else:
             self.stoppedWatching()

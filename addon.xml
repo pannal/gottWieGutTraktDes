@@ -19,7 +19,7 @@
         <datadir zip="true">http://dl.dropbox.com/u/1711476/XBMC-Repository-devel</datadir>
     </extension>
     <extension point="xbmc.addon.metadata" name="GottWieGutTraktDes.metadata">
-        <summary lang="en">trakt utilities in a mode which doesn't stalk</summary>
+        <summary lang="en">use trakt without stalking</summary>
         <description lang="en">GottWieGutTraktDes - Trakt Utilities Knackwurst Edition
     Synchronise Movies / TVShows with Trakt (more infos and account creation: http://trakt.tv/).
     This plugin isn't a replacement for the official trakt plugin. It's a supplement to the trakt plugin.

@@ -2,7 +2,7 @@
 # 
 
 import xbmc,xbmcaddon,xbmcgui
-import telnetlib, time
+import telnetlib, time, datetime
 
 try: import simplejson as json
 except ImportError: import json
@@ -21,11 +21,6 @@ __maintainer__ = "Weener Mac Hanz"
 __email__ = "gutah@rai.se"
 __status__ = "Production"
 
-__settings__ = xbmcaddon.Addon( "script.GottWieGutTraktDes" )
-__language__ = __settings__.getLocalizedString
-
-
-instantUpdateOnWatchMark = __settings__.getSetting("instantUpdateOnWatchMark")
 
 # Receives XBMC notifications and passes them off to the rating functions
 class NotificationService(threading.Thread):
@@ -82,6 +77,11 @@ class NotificationService(threading.Thread):
                 if 'method' in data and 'params' in data and 'sender' in data['params'] and data['params']['sender'] == 'xbmc':
                     if data['method'] == 'Player.OnStop':
                         scrobbler.playbackEnded()
+                        Debug("pb ended", getSync_after_x())
+                        if getSync_after_x():
+                            Debug("syncing")
+                            syncAfterX()
+
                     elif data['method'] == 'Player.OnPlay':
                         if 'data' in data['params'] and 'item' in data['params']['data'] and 'id' in data['params']['data']['item'] and 'type' in data['params']['data']['item']:
                             scrobbler.playbackStarted(data['params']['data'])
@@ -89,11 +89,12 @@ class NotificationService(threading.Thread):
                         scrobbler.playbackPaused()
                     elif data['method'] == 'VideoLibrary.OnUpdate':
                         if 'data' in data['params'] and 'playcount' in data['params']['data']:
-                            if instantUpdateOnWatchMark:
+                            if getInstantUpdateOnWatchMark():
                                 instantSyncPlayCount(data)
 
                     elif data['method'] == 'System.OnQuit':
                         self.abortRequested = True
+
         try:
             tn.close()
         except:

@@ -30,10 +30,10 @@ def menu():
     if checkSettings() == False:
         return
 
-    options = [__language__(1210).encode( "utf-8", "ignore" ), __language__(1211).encode( "utf-8", "ignore" ), __language__(1212).encode( "utf-8", "ignore" ), __language__(1213).encode( "utf-8", "ignore" ), __language__(1214).encode( "utf-8", "ignore" )]
+    options = [__language__(1210).encode( "utf-8", "ignore" ), __language__(1211).encode( "utf-8", "ignore" ), __language__(1212).encode( "utf-8", "ignore" ), __language__(1213).encode( "utf-8", "ignore" ), __language__(1214).encode( "utf-8", "ignore" ), "Open Settings"]
     
     while True:
-        select = xbmcgui.Dialog().select("Trakt Utilities", options)
+        select = xbmcgui.Dialog().select("Abgetrakt", options)
         Debug("Select: " + str(select))
         if select == -1:
             Debug ("menu quit by user")
@@ -49,6 +49,8 @@ def menu():
                 submenuTrendingMoviesTVShows()
             elif select == 4: # Update / Sync / Clean
                 submenuUpdateSyncClean()
+            elif select == 5: #open settings
+                __settings__.openSettings()
 
 
 def submenuUpdateSyncClean():
@@ -56,7 +58,7 @@ def submenuUpdateSyncClean():
     options = [__language__(1217).encode( "utf-8", "ignore" ), __language__(1218).encode( "utf-8", "ignore" ), __language__(1219).encode( "utf-8", "ignore" ), __language__(1220).encode( "utf-8", "ignore" ), __language__(1221).encode( "utf-8", "ignore" ), __language__(1222).encode( "utf-8", "ignore" )]
     
     while True:
-        select = xbmcgui.Dialog().select("Trakt Utilities", options)
+        select = xbmcgui.Dialog().select("Abgetrakt", options)
         Debug("Select: " + str(select))
         if select == -1:
             Debug ("menu quit by user")
@@ -65,10 +67,14 @@ def submenuUpdateSyncClean():
             updateMovieCollection()
         elif select == 1: # Sync seen Movies
             syncSeenMovies()
+            setSyncedNow()
+
         elif select == 2: # Update TV Show Collection
             updateTVShowCollection()
         elif select == 3: # Sync seen TV Shows
             syncSeenTVShows()
+            setSyncedNow()
+
         elif select == 4: # Clean Movie Collection
             cleanMovieCollection()
         elif select == 5: # Clean TV Show Collection

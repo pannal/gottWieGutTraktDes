@@ -3,7 +3,7 @@
 
 import os
 import xbmc,xbmcaddon,xbmcgui
-import time, socket
+import time, socket, datetime
 from utilities import *
 
 try:
@@ -19,6 +19,8 @@ try:
 except ImportError:
   # Python 2.5 and earlier
   import sha
+
+from utilities import *
   
 __author__ = "Hanz Weener"
 __credits__ = ["Hanz Weener", "Ralph-Gordon Paul", "Adrian Cowan", "Justin Nemeth",  "Sean Rudford"]
@@ -35,7 +37,6 @@ apikey = '48dfcb4813134da82152984e8c4f329bc8b8b46a'
 username = __settings__.getSetting("username")
 pwd = sha.new(__settings__.getSetting("password")).hexdigest()
 debug = __settings__.getSetting( "debug" )
-noBugging = __settings__.getSetting( "noBugging" )
 
 headers = {"Content-type": "application/x-www-form-urlencoded", "Accept": "text/plain"}
 
@@ -44,7 +45,7 @@ def updateMovieCollection(daemon=False):
 
     if not daemon:
         progress = xbmcgui.DialogProgress()
-        progress.create("Trakt Utilities", __language__(1132).encode( "utf-8", "ignore" )) # Checking Database for new Episodes
+        progress.create("Abgetrakt", __language__(1132).encode( "utf-8", "ignore" )) # Checking Database for new Episodes
     
     # get the required informations
     trakt_movies = traktMovieListByImdbID(getMovieCollectionFromTrakt())
@@ -60,7 +61,7 @@ def updateMovieCollection(daemon=False):
         if not daemon:
             progress.update(100 / len(xbmc_movies) * i)
             if progress.iscanceled():
-                notification ("Trakt Utilities", __language__(1134).encode( "utf-8", "ignore" )) # Progress Aborted
+                notification ("Abgetrakt", __language__(1134).encode( "utf-8", "ignore" )) # Progress Aborted
                 return
         try:
             imdbid = xbmc_movies[i]['imdbnumber']
@@ -121,7 +122,7 @@ def updateMovieCollection(daemon=False):
         skipped = 0
         
         if not daemon:
-            choice = xbmcgui.Dialog().yesno("Trakt Utilities", str(len(movie_collection)) + " " + __language__(1125).encode( "utf-8", "ignore" ), movies_string) # Movies will be added to Trakt Collection
+            choice = xbmcgui.Dialog().yesno("Abgetrakt", str(len(movie_collection)) + " " + __language__(1125).encode( "utf-8", "ignore" ), movies_string) # Movies will be added to Trakt Collection
             if choice == False:
                 return
         first = 0
@@ -156,7 +157,7 @@ def updateTVShowCollection(daemon=False):
 
     if not daemon:
         progress = xbmcgui.DialogProgress()
-        progress.create("Trakt Utilities", __language__(1133).encode( "utf-8", "ignore" )) # Checking Database for new Episodes
+        progress.create("Abgetrakt", __language__(1133).encode( "utf-8", "ignore" )) # Checking Database for new Episodes
 
     # get the required informations
     trakt_tvshowlist = getTVShowCollectionFromTrakt()
@@ -265,7 +266,7 @@ def updateTVShowCollection(daemon=False):
         if daemon:
             notification("Abgetrakt", str(count) + " " + __language__(1131).encode( "utf-8", "ignore" )) # TVShow Episodes will be added to Trakt Collection
         else:
-            choice = xbmcgui.Dialog().yesno("Trakt Utilities", str(count) + " " + __language__(1131).encode( "utf-8", "ignore" ), tvshows_string) # TVShow Episodes will be added to Trakt Collection
+            choice = xbmcgui.Dialog().yesno("Abgetrakt", str(count) + " " + __language__(1131).encode( "utf-8", "ignore" ), tvshows_string) # TVShow Episodes will be added to Trakt Collection
             if choice == False:
                 return
         
@@ -301,14 +302,14 @@ def cleanMovieCollection(daemon=False):
 
     # display warning
     if not daemon:
-        choice = xbmcgui.Dialog().yesno("Trakt Utilities", __language__(1153).encode( "utf-8", "ignore" ), __language__(1154).encode( "utf-8", "ignore" ), __language__(1155).encode( "utf-8", "ignore" )) # 
+        choice = xbmcgui.Dialog().yesno("Abgetrakt", __language__(1153).encode( "utf-8", "ignore" ), __language__(1154).encode( "utf-8", "ignore" ), __language__(1155).encode( "utf-8", "ignore" )) #
         if choice == False:
             return
     
     # display progress
     if not daemon:
         progress = xbmcgui.DialogProgress()
-        progress.create("Trakt Utilities", __language__(1139).encode( "utf-8", "ignore" )) # Checking Database for deleted Movies
+        progress.create("Abgetrakt", __language__(1139).encode( "utf-8", "ignore" )) # Checking Database for deleted Movies
 
     # get the required informations
     trakt_movies = traktMovieListByImdbID(getMoviesFromTrakt())
@@ -369,13 +370,13 @@ def cleanTVShowCollection(daemon=False):
 
     # display warning
     if not daemon:
-        choice = xbmcgui.Dialog().yesno("Trakt Utilities", __language__(1156).encode( "utf-8", "ignore" ), __language__(1154).encode( "utf-8", "ignore" ), __language__(1155).encode( "utf-8", "ignore" )) # 
+        choice = xbmcgui.Dialog().yesno("Abgetrakt", __language__(1156).encode( "utf-8", "ignore" ), __language__(1154).encode( "utf-8", "ignore" ), __language__(1155).encode( "utf-8", "ignore" )) #
         if choice == False:
             return
 
     if not daemon:
         progress = xbmcgui.DialogProgress()
-        progress.create("Trakt Utilities", __language__(1140).encode( "utf-8", "ignore" )) # Checking Database for deleted Episodes
+        progress.create("Abgetrakt", __language__(1140).encode( "utf-8", "ignore" )) # Checking Database for deleted Episodes
 
     # get the required informations
     trakt_tvshowlist = getTVShowCollectionFromTrakt()
@@ -496,7 +497,7 @@ def cleanTVShowCollection(daemon=False):
     # add episodes to library (collection):
     if count > 0:
         if not daemon:
-            choice = xbmcgui.Dialog().yesno("Trakt Utilities", str(count) + " " + __language__(1141).encode( "utf-8", "ignore" ), tvshows_string) # TVShow Episodes will be removed from Trakt Collection
+            choice = xbmcgui.Dialog().yesno("Abgetrakt", str(count) + " " + __language__(1141).encode( "utf-8", "ignore" ), tvshows_string) # TVShow Episodes will be removed from Trakt Collection
             if choice == False:
                 return
             
@@ -531,10 +532,10 @@ def cleanTVShowCollection(daemon=False):
 
 # updates seen movies on trakt
 def syncSeenMovies(daemon=False):
-
+    noBugging = bool(__settings__.getSetting( "noBugging" ))
     if not daemon:
         progress = xbmcgui.DialogProgress()
-        progress.create("Trakt Utilities", __language__(1300).encode( "utf-8", "ignore" )) # Checking XBMC Database for new seen Movies
+        progress.create("Abgetrakt", __language__(1300).encode( "utf-8", "ignore" )) # Checking XBMC Database for new seen Movies
     
     # get the required informations
     trakt_movies = traktMovieListByImdbID(getMoviesFromTrakt())
@@ -616,7 +617,7 @@ def syncSeenMovies(daemon=False):
     if len(movies_seen) > 0:
         
         if not noBugging and not daemon:
-            choice = xbmcgui.Dialog().yesno("Trakt Utilities", str(len(movies_seen)) + " " + __language__(1127).encode( "utf-8", "ignore" ), movies_string) # Movies will be added as seen on Trakt
+            choice = xbmcgui.Dialog().yesno("Abgetrakt", str(len(movies_seen)) + " " + __language__(1127).encode( "utf-8", "ignore" ), movies_string) # Movies will be added as seen on Trakt
             if choice == False:
                 if not daemon:
                     progress.close()
@@ -629,13 +630,15 @@ def syncSeenMovies(daemon=False):
             Debug ("inserted: " + str(data['inserted']) + " already_exist: " + str(data['already_exist']) + " skipped: " + str(data['skipped']))
             if data['skipped'] > 0:
                 Debug ("skipped movies: " + str(data['skipped_movies']))
-            notification ("Trakt Utilities", str(len(movies_seen) - data['skipped']) + " " + __language__(1126).encode( "utf-8", "ignore" )) # Movies updated
+            notification ("Abgetrakt", str(len(movies_seen) - data['skipped']) + " " + __language__(1126).encode( "utf-8", "ignore" )) # Movies updated
+            setSyncedNow()
+
         elif data['status'] == 'failure':
             Debug ("Error uploading seen movies: " + str(data['error']))
             if not daemon:
                 xbmcgui.Dialog().ok("Abgetrakt", __language__(1123).encode( "utf-8", "ignore" ), str(data['error'])) # Error uploading seen movies
     else:
-        if not daemon:
+        if not noBugging and not daemon:
             xbmcgui.Dialog().ok("Abgetrakt", __language__(1124).encode( "utf-8", "ignore" )) # no new seen movies to update for trakt
     
     xbmc_movies_imdbid = {}
@@ -648,7 +651,7 @@ def syncSeenMovies(daemon=False):
     if not daemon:
         progress.close()
         progress = xbmcgui.DialogProgress()
-        progress.create("Trakt Utilities", __language__(1301).encode( "utf-8", "ignore" )) # Checking Trakt Database for new seen Movies
+        progress.create("Abgetrakt", __language__(1301).encode( "utf-8", "ignore" )) # Checking Trakt Database for new seen Movies
 
     
     # set movies seen from trakt, that are unseen on xbmc:
@@ -680,7 +683,7 @@ def syncSeenMovies(daemon=False):
     
     if len(movies_seen) > 0:
         if not noBugging and not daemon:
-            choice = xbmcgui.Dialog().yesno("Trakt Utilities", str(len(movies_seen)) + " " + __language__(1147).encode( "utf-8", "ignore" ), movies_string) # Movies will be added as seen on Trakt
+            choice = xbmcgui.Dialog().yesno("Abgetrakt", str(len(movies_seen)) + " " + __language__(1147).encode( "utf-8", "ignore" ), movies_string) # Movies will be added as seen on Trakt
             if choice == False:
                 if not daemon:
                     progress.close()
@@ -694,17 +697,17 @@ def syncSeenMovies(daemon=False):
         else:
             xbmcgui.Dialog().ok("Abgetrakt", str(len(movies_seen)) + " " + __language__(1129).encode( "utf-8", "ignore" )) # Movies updated on XBMC
     else:
-        if not daemon:
+        if not noBugging and not daemon:
             xbmcgui.Dialog().ok("Abgetrakt", __language__(1128).encode( "utf-8", "ignore" )) # no new seen movies to update for xbmc
     if not daemon:
         progress.close()
 
 # syncs seen tvshows between trakt and xbmc (no unlibrary)
 def syncSeenTVShows(daemon=False):
-
+    noBugging = bool(__settings__.getSetting( "noBugging" ))
     if not daemon:
         progress = xbmcgui.DialogProgress()
-        progress.create("Trakt Utilities", __language__(1143).encode( "utf-8", "ignore" )) # Checking XBMC Database for new seen Episodes
+        progress.create("Abgetrakt", __language__(1143).encode( "utf-8", "ignore" )) # Checking XBMC Database for new seen Episodes
 
     # get the required informations
     trakt_tvshowlist = getWatchedTVShowsFromTrakt()
@@ -810,9 +813,8 @@ def syncSeenTVShows(daemon=False):
         if noBugging or daemon:
             choice = True
         else:
-            choice = xbmcgui.Dialog().yesno("Trakt Utilities", str(count) + " " + __language__(1144).encode( "utf-8", "ignore" ), set_as_seen_titles) # TVShow Episodes will be added as seen on Trakt
+            choice = xbmcgui.Dialog().yesno("Abgetrakt", str(count) + " " + __language__(1144).encode( "utf-8", "ignore" ), set_as_seen_titles) # TVShow Episodes will be added as seen on Trakt
         
-        choice = True
         if choice == True:
         
             error = None
@@ -830,23 +832,24 @@ def syncSeenTVShows(daemon=False):
                     Debug("Successfully uploaded tvshow " + repr(set_as_seen[i]['title']) + ": " + str(data['message']))
                 
             if error == None:
-                if daemon:
+                if noBugging or daemon:
                     notification("Abgetrakt", __language__(1137).encode( "utf-8", "ignore" )) # Episodes sucessfully updated to Trakt
-                #else:
-                #    xbmcgui.Dialog().ok("Abgetrakt", __language__(1137).encode( "utf-8", "ignore" )) # Episodes sucessfully updated to Trakt
+                else:
+                    xbmcgui.Dialog().ok("Abgetrakt", __language__(1137).encode( "utf-8", "ignore" )) # Episodes sucessfully updated to Trakt
+
+                setSyncedNow()
             else:
                 if daemon:
                     notification("Abgetrakt", __language__(1145).encode( "utf-8", "ignore" ) + str(error)) # Error uploading seen TVShows
-                #else:
-                #    xbmcgui.Dialog().ok("Abgetrakt", __language__(1145).encode( "utf-8", "ignore" ), error) # Error uploading seen TVShows
+                else:
+                    xbmcgui.Dialog().ok("Abgetrakt", __language__(1145).encode( "utf-8", "ignore" ), error) # Error uploading seen TVShows
     else:
-        if not daemon:
-            #xbmcgui.Dialog().ok("Abgetrakt", __language__(1146).encode( "utf-8", "ignore" )) # No new seen episodes in XBMC library to update
-            pass
+        if not noBugging and not daemon:
+            xbmcgui.Dialog().ok("Abgetrakt", __language__(1146).encode( "utf-8", "ignore" )) # No new seen episodes in XBMC library to update
 
     if not daemon:
         progress = xbmcgui.DialogProgress()
-        progress.create("Trakt Utilities", __language__(1148).encode( "utf-8", "ignore" )) # Checking Trakt Database for new seen Episodes
+        progress.create("Abgetrakt", __language__(1148).encode( "utf-8", "ignore" )) # Checking Trakt Database for new seen Episodes
     progress_count = 0
     
     xbmc_tvshows_tvdbid = {}
@@ -936,14 +939,13 @@ def syncSeenTVShows(daemon=False):
         if noBugging or daemon:
             choice = True
         else:
-            choice = xbmcgui.Dialog().yesno("Trakt Utilities", str(count) + " " + __language__(1149).encode( "utf-8", "ignore" ), set_as_seen_titles) # TVShow Episodes will be set as seen on XBMC
+            choice = xbmcgui.Dialog().yesno("Abgetrakt", str(count) + " " + __language__(1149).encode( "utf-8", "ignore" ), set_as_seen_titles) # TVShow Episodes will be set as seen on XBMC
         
-        choice = True
         if choice == True:
             
             if not daemon:
                 progress = xbmcgui.DialogProgress()
-                progress.create("Trakt Utilities", __language__(1150).encode( "utf-8", "ignore" )) # updating XBMC Database
+                progress.create("Abgetrakt", __language__(1150).encode( "utf-8", "ignore" )) # updating XBMC Database
             progress_count = 0
 
             for tvshow in set_as_seen:
@@ -961,6 +963,7 @@ def syncSeenTVShows(daemon=False):
     
             if not daemon:
                 progress.close()
+
     else:
-        if  not daemon:
+        if not noBugging and not daemon:
             xbmcgui.Dialog().ok("Abgetrakt", __language__(1151).encode( "utf-8", "ignore" )) # No new seen episodes on Trakt to update

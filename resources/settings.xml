@@ -4,17 +4,20 @@
         <setting id="username" type="text" label="1013" default="" />
         <setting id="password" type="text" option="hidden" label="1014" default="" />
         <setting id="debug" type="bool" label="1011" default="true"/>
-        <setting id="noBugging" type="bool" label="Don't bug me with dialogs" default="true"/>
+        <setting id="noBugging" type="bool" label="Don't bug me with non-error dialogs" default="true"/>
     </category>
     <category label="1020"><!-- Auto Sync -->
         <setting id="autosync_collection" type="bool" label="Auto update Collection at startup" default="false"/>
         <setting id="autosync_cleancollection" type="bool" label="Auto clean Collection at startup" default="false"/>
         <setting id="autosync_seenmovies" type="bool" label="Auto sync seen at startup" default="false"/>
         <setting id="instantUpdateOnWatchMark" type="bool" label="Instantly update Trakt seen mark on (un)watch" default="false"/>
-        <setting id="sync_after_plays" type="bool" label="Sync after number of plays without sync" default="true"/>
-        <setting id="sync_after_plays_num" type="slider" label="Sync after plays" range="0,1,40" default="5"/>
-        <setting id="sync_after_days" type="bool" label="Sync after number of days without sync" default="true"/>
-        <setting id="sync_after_days_num" type="slider" label="Sync after days" range="0,1,30" default="3"/>
+        <setting id="sync_after_plays" type="bool" label="Sync with Trakt after a certain number of plays" default="true"/>
+        <setting id="sync_after_plays_num" type="slider" label="amount of plays" range="1,1,40" default="5" option="int"/>
+        <setting id="sync_after_plays_considered_seen" type="slider" label="Consider item as seen after % watched" range="0,5,100" default="90"/>
+        <setting id="sync_after_plays_count" type="text" label="Wurst" default="" visible="false"/>
+        <setting id="sync_after_days" type="bool" label="Sync with Trakt after a certain number of days without sync" default="true"/>
+        <setting id="sync_after_days_num" type="slider" label="amount of days" range="1,1,30" default="3" option="int"/>
+        <setting id="sync_after_days_lastSync" type="text" label="Wurst" default="" visible="false"/>
     </category>
     <category label="1030"><!-- Rating -->
         <setting id="rate_movie" type="bool" label="1031" default="false"/>

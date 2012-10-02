@@ -2,13 +2,14 @@
 # 
 
 import os, sys
-import xbmc,xbmcaddon,xbmcgui
+import xbmc,xbmcaddon,xbmcgui, datetime
 import time, socket
 
 try: import simplejson as json
 except ImportError: import json
 
 from nbhttpconnection import *
+from extendedSettings import *
 
 import urllib, re
 
@@ -43,6 +44,95 @@ pwd = sha.new(__settings__.getSetting("password")).hexdigest()
 debug = __settings__.getSetting( "debug" )
 
 headers = {"Content-type": "application/x-www-form-urlencoded", "Accept": "text/plain"}
+
+
+def getSyncAfterDaysLastSync():
+    sync_after_days_lastSync = __settings__.getSetting("sync_after_days_lastSync")
+    try:
+        sync_after_days_lastSync = datetime.datetime.strptime(sync_after_days_lastSync, "%Y-%m-%dT%H:%M:%S.%f")
+    except:
+        Debug("lastSync setting was wrong, using now")
+        sync_after_days_lastSync = datetime.datetime.now()
+    return sync_after_days_lastSync
+
+
+def getInstantUpdateOnWatchMark():
+    instantUpdateOnWatchMark = __settings__.getSetting("instantUpdateOnWatchMark")
+    try:
+        instantUpdateOnWatchMark = bool(instantUpdateOnWatchMark)
+    except:
+        Debug("instantUpdateOnWatchMark setting was wrong, using default")
+        instantUpdateOnWatchMark = False
+    return instantUpdateOnWatchMark
+
+
+def getSync_after_days_num():
+    sync_after_days_num = __settings__.getSetting("sync_after_days_num")
+    try:
+        sync_after_days_num = int(float(sync_after_days_num))
+
+    except:
+        Debug("sync after days setting was wrong, using default")
+        sync_after_days_num = 5
+
+    return sync_after_days_num
+
+
+def getSync_after_plays_num():
+    sync_after_plays_num = __settings__.getSetting("sync_after_plays_num")
+    try:
+        sync_after_plays_num = int(float(sync_after_plays_num))
+
+    except:
+        Debug("sync_after_plays_num setting was wrong, using default")
+        sync_after_plays_num = 5
+
+    return sync_after_plays_num
+
+
+def getSync_after_plays_count():
+    sync_after_plays_count = __settings__.getSetting("sync_after_plays_count")
+    try:
+        sync_after_plays_count = int(sync_after_plays_count)
+
+    except:
+        Debug("sync_after_plays_count setting was wrong, using default")
+        sync_after_plays_count = 0
+
+    return sync_after_plays_count
+
+
+def getSync_after_plays_considered_seen():
+    sync_after_plays_considered_seen = __settings__.getSetting("sync_after_plays_considered_seen")
+    try:
+        sync_after_plays_considered_seen = float(sync_after_plays_considered_seen)
+
+    except:
+        Debug("sync_after_plays_considered_seen considered seen setting was wrong, using default")
+        sync_after_plays_considered_seen = 85.0
+
+    return sync_after_plays_considered_seen
+
+
+def getSync_after_x():
+    return getSync_after_plays() or getSync_after_days()
+
+def getSync_after_plays():
+    return bool(__settings__.getSetting("sync_after_plays"))
+
+def getSync_after_days():
+    return bool(__settings__.getSetting("sync_after_days"))
+
+instantUpdateOnWatchMark = __settings__.getSetting("instantUpdateOnWatchMark")
+sync_after_plays = bool(__settings__.getSetting("sync_after_plays"))
+sync_after_plays_num = __settings__.getSetting("sync_after_plays_num")
+sync_after_plays_count = __settings__.getSetting("sync_after_plays_count")
+sync_after_plays_considered_seen = __settings__.getSetting("sync_after_plays_considered_seen")
+sync_after_days = bool(__settings__.getSetting("sync_after_days"))
+sync_after_days_num = __settings__.getSetting("sync_after_days_num")
+sync_after_days_lastSync = __settings__.getSetting("sync_after_days_lastSync")
+sync_after_x = getSync_after_x()
+
 
 def Debug(msg, force=False):
     if (debug == 'true' or force):
@@ -870,6 +960,36 @@ def scrobbleEpisodeOnTrakt(tvdb_id, title, year, season, episode, duration, perc
     if responce == None:
         Debug("Error in request from 'scrobbleEpisodeOnTrakt()'")
     return responce
+
+
+def syncIncreasePlayCount():
+    sync_after_plays_count += 1
+    __settings__.setSetting("sync_after_plays_count", str(sync_after_plays_count))
+    Debug("updated playcount to %s" % sync_after_plays_count)
+
+    return sync_after_plays_count
+
+def syncAfterX():
+    now = datetime.datetime.now()
+    daysAfter = getSyncAfterDaysLastSync() + datetime.timedelta(days=getSync_after_days_num())
+    plays = getSync_after_plays_count()
+    toPlay = getSync_after_plays_num()
+    syncAfterPlays = getSync_after_plays()
+    syncAfterDays = getSync_after_days()
+
+    Debug("Sync after X %s/%s %s/%s %s" % (plays, toPlay, now, daysAfter, getSync_after_x()))
+    if (syncAfterPlays and plays >= toPlay) or (syncAfterDays and now >= daysAfter):
+        Debug("Syncing stuff because we hit the threshold")
+        from sync_update import syncSeenMovies, syncSeenTVShows
+        syncSeenMovies()
+        syncSeenTVShows()
+
+        return
+    syncIncreasePlayCount()
+
+def setSyncedNow():
+    __settings__.setSetting("sync_after_days_lastSync", datetime.datetime.now().isoformat())
+    __settings__.setSetting("sync_after_plays_count", "0")
 
 
 """
