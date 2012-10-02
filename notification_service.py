@@ -82,11 +82,21 @@ class NotificationService(threading.Thread):
                     elif data['method'] == 'Player.OnPlay':
                         if 'data' in data['params'] and 'item' in data['params']['data'] and 'id' in data['params']['data']['item'] and 'type' in data['params']['data']['item']:
                             #fixme: look here for current position?
+                            print data
                             scrobbler.playbackStarted(data['params']['data'])
                     elif data['method'] == 'Player.OnPause':
                         scrobbler.playbackPaused()
                     elif data['method'] == 'VideoLibrary.OnUpdate':
+                        Debug("OnUpdate %s" % data)
                         if 'data' in data['params'] and 'playcount' in data['params']['data']:
+                            # 'playcount' in data indicates that playcount has changed. so we received a seen status on the item
+                            if getSync_after_x() and data['params']['data']["playcount"] >= 1:
+                                # we've played a file and consider it seen
+                                syncIncreasePlayCount()
+                                Debug("syncing, playcount: %s" % data['params']['data']["playcount"])
+                                syncAfterX()
+
+                            Debug("instantUpdateOnWatchMark: %s" % getInstantUpdateOnWatchMark())
                             if getInstantUpdateOnWatchMark():
                                 instantSyncPlayCount(data)
 

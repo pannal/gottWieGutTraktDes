@@ -47,6 +47,7 @@ headers = {"Content-type": "application/x-www-form-urlencoded", "Accept": "text/
 
 
 def getSyncAfterDaysLastSync():
+    __settings__ = xbmcaddon.Addon( "script.GottWieGutTraktDes" )
     sync_after_days_lastSync = __settings__.getSetting("sync_after_days_lastSync")
     try:
         sync_after_days_lastSync = datetime.datetime.strptime(sync_after_days_lastSync, "%Y-%m-%dT%H:%M:%S.%f")
@@ -57,16 +58,14 @@ def getSyncAfterDaysLastSync():
 
 
 def getInstantUpdateOnWatchMark():
+    __settings__ = xbmcaddon.Addon( "script.GottWieGutTraktDes" )
     instantUpdateOnWatchMark = __settings__.getSetting("instantUpdateOnWatchMark")
-    try:
-        instantUpdateOnWatchMark = bool(instantUpdateOnWatchMark)
-    except:
-        Debug("instantUpdateOnWatchMark setting was wrong, using default")
-        instantUpdateOnWatchMark = False
-    return instantUpdateOnWatchMark
+
+    return instantUpdateOnWatchMark == "true"
 
 
 def getSync_after_days_num():
+    __settings__ = xbmcaddon.Addon( "script.GottWieGutTraktDes" )
     sync_after_days_num = __settings__.getSetting("sync_after_days_num")
     try:
         sync_after_days_num = int(float(sync_after_days_num))
@@ -79,6 +78,7 @@ def getSync_after_days_num():
 
 
 def getSync_after_plays_num():
+    __settings__ = xbmcaddon.Addon( "script.GottWieGutTraktDes" )
     sync_after_plays_num = __settings__.getSetting("sync_after_plays_num")
     try:
         sync_after_plays_num = int(float(sync_after_plays_num))
@@ -91,6 +91,7 @@ def getSync_after_plays_num():
 
 
 def getSync_after_plays_count():
+    __settings__ = xbmcaddon.Addon( "script.GottWieGutTraktDes" )
     sync_after_plays_count = __settings__.getSetting("sync_after_plays_count")
     try:
         sync_after_plays_count = int(sync_after_plays_count)
@@ -102,36 +103,26 @@ def getSync_after_plays_count():
     return sync_after_plays_count
 
 
-def getSync_after_plays_considered_seen():
-    sync_after_plays_considered_seen = __settings__.getSetting("sync_after_plays_considered_seen")
-    try:
-        sync_after_plays_considered_seen = float(sync_after_plays_considered_seen)
-
-    except:
-        Debug("sync_after_plays_considered_seen considered seen setting was wrong, using default")
-        sync_after_plays_considered_seen = 85.0
-
-    return sync_after_plays_considered_seen
-
-
 def getSync_after_x():
+    __settings__ = xbmcaddon.Addon( "script.GottWieGutTraktDes" )
     return getSync_after_plays() or getSync_after_days()
 
 def getSync_after_plays():
-    return bool(__settings__.getSetting("sync_after_plays"))
+    __settings__ = xbmcaddon.Addon( "script.GottWieGutTraktDes" )
+    return __settings__.getSetting("sync_after_plays") == "true"
 
 def getSync_after_days():
-    return bool(__settings__.getSetting("sync_after_days"))
+    __settings__ = xbmcaddon.Addon( "script.GottWieGutTraktDes" )
+    return __settings__.getSetting("sync_after_days") == "true"
 
-instantUpdateOnWatchMark = __settings__.getSetting("instantUpdateOnWatchMark")
-sync_after_plays = bool(__settings__.getSetting("sync_after_plays"))
-sync_after_plays_num = __settings__.getSetting("sync_after_plays_num")
-sync_after_plays_count = __settings__.getSetting("sync_after_plays_count")
-sync_after_plays_considered_seen = __settings__.getSetting("sync_after_plays_considered_seen")
-sync_after_days = bool(__settings__.getSetting("sync_after_days"))
-sync_after_days_num = __settings__.getSetting("sync_after_days_num")
-sync_after_days_lastSync = __settings__.getSetting("sync_after_days_lastSync")
-sync_after_x = getSync_after_x()
+#instantUpdateOnWatchMark = getInstantUpdateOnWatchMark()
+#sync_after_plays = getSync_after_plays()
+#sync_after_plays_num = getSync_after_plays_num()
+#sync_after_plays_count = getSync_after_plays_count()
+#sync_after_days = getSync_after_days()
+#sync_after_days_num = getSync_after_days_num()
+#sync_after_days_lastSync = getSyncAfterDaysLastSync()
+#sync_after_x = getSync_after_x()
 
 
 def Debug(msg, force=False):
@@ -475,6 +466,27 @@ def getMoviesFromXBMC():
 def getMovieDetailsFromXbmc(libraryId, fields):
     rpccmd = json.dumps({'jsonrpc': '2.0', 'method': 'VideoLibrary.GetMovieDetails','params':{'movieid': libraryId, 'properties': fields}, 'id': 1})
     
+    result = xbmc.executeJSONRPC(rpccmd)
+    result = json.loads(result)
+
+    # check for error
+    try:
+        error = result['error']
+        Debug("getMovieDetailsFromXbmc: " + str(error))
+        return None
+    except KeyError:
+        pass # no error
+
+    try:
+        return result['result']['moviedetails']
+    except KeyError:
+        Debug("getMovieDetailsFromXbmc: KeyError: result['result']['moviedetails']")
+        return None
+
+# get a single movie from xbmc given the id
+def getPlayerState():
+    rpccmd = json.dumps({'jsonrpc': '2.0', 'method': 'VideoLibrary.GetMovieDetails','params':{'movieid': libraryId, 'properties': fields}, 'id': 1})
+
     result = xbmc.executeJSONRPC(rpccmd)
     result = json.loads(result)
 
