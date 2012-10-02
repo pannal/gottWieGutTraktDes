@@ -152,10 +152,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="notification_service.py" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="notification_service.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/notification_service.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="91" column="60" selection-start="3794" selection-end="3794" vertical-scroll-proportion="0.6785714">
+            <state line="91" column="60" selection-start="3794" selection-end="3794" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -219,10 +219,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="addon.xml" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="addon.xml" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/addon.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="21" column="53" selection-start="1208" selection-end="1208" vertical-scroll-proportion="0.0">
+            <state line="3" column="13" selection-start="137" selection-end="144" vertical-scroll-proportion="0.052805282">
               <folding />
             </state>
           </provider>
@@ -630,13 +630,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/addon.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="53" selection-start="1208" selection-end="1208" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/windows.py">
       <provider selected="true" editor-type-id="text-editor">
         <state line="27" column="17" selection-start="615" selection-end="615" vertical-scroll-proportion="0.0">
@@ -662,13 +655,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/settings.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="96" selection-start="1462" selection-end="1462" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/utilities.py">
       <provider selected="true" editor-type-id="text-editor">
         <state line="58" column="31" selection-start="1546" selection-end="1573" vertical-scroll-proportion="6.709677">
@@ -678,7 +664,21 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/notification_service.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="91" column="60" selection-start="3794" selection-end="3794" vertical-scroll-proportion="0.6785714">
+        <state line="91" column="60" selection-start="3794" selection-end="3794" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/settings.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="16" column="96" selection-start="1462" selection-end="1462" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/addon.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="3" column="13" selection-start="137" selection-end="144" vertical-scroll-proportion="0.052805282">
           <folding />
         </state>
       </provider>
