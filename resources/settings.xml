@@ -15,7 +15,7 @@
         <setting id="sync_after_plays_num" type="slider" label="amount of plays" range="1,1,40" default="5" option="int"/>
         <setting id="sync_after_plays_considered_seen" type="slider" label="Consider item as seen after % watched" range="0,5,100" default="90"/>
         <setting id="sync_after_plays_count" type="text" label="Wurst" default="" visible="false"/>
-        <setting id="sync_after_days" type="bool" label="Sync with Trakt after a certain number of days without sync" default="true"/>
+        <setting id="sync_after_days" type="bool" label="Sync with Trakt after a days passed without sync" default="true"/>
         <setting id="sync_after_days_num" type="slider" label="amount of days" range="1,1,30" default="3" option="int"/>
         <setting id="sync_after_days_lastSync" type="text" label="Wurst" default="" visible="false"/>
     </category>
