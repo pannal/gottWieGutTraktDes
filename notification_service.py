@@ -81,6 +81,8 @@ class NotificationService(threading.Thread):
                         if getSync_after_x():
                             Debug("syncing")
                             syncAfterX()
+                            if 'playcount' in data['params']['data']:
+                                syncIncreasePlayCount()
 
                     elif data['method'] == 'Player.OnPlay':
                         if 'data' in data['params'] and 'item' in data['params']['data'] and 'id' in data['params']['data']['item'] and 'type' in data['params']['data']['item']:

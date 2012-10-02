@@ -58,6 +58,11 @@ def autostart():
             
             if autosync_moviecollection == "true" or autosync_tvshowcollection == "true" or autosync_seenmovies == "true" or autosync_seentvshows == "true":
                 notification("Abgetrakt", __language__(1184).encode( "utf-8", "ignore" )) # update / sync done
+
+            if getSync_after_x():
+                Debug("syncing")
+                syncAfterX(daemon=True)
+
         except SystemExit:
             notificationThread.abortRequested = True
             Debug("[Service] Auto sync processes aborted due to shutdown request")

@@ -969,7 +969,7 @@ def syncIncreasePlayCount():
 
     return sync_after_plays_count
 
-def syncAfterX():
+def syncAfterX(daemon=False):
     now = datetime.datetime.now()
     daysAfter = getSyncAfterDaysLastSync() + datetime.timedelta(days=getSync_after_days_num())
     plays = getSync_after_plays_count()
@@ -981,11 +981,8 @@ def syncAfterX():
     if (syncAfterPlays and plays >= toPlay) or (syncAfterDays and now >= daysAfter):
         Debug("Syncing stuff because we hit the threshold")
         from sync_update import syncSeenMovies, syncSeenTVShows
-        syncSeenMovies()
-        syncSeenTVShows()
-
-        return
-    syncIncreasePlayCount()
+        syncSeenMovies(daemon=daemon)
+        syncSeenTVShows(daemon=daemon)
 
 def setSyncedNow():
     __settings__.setSetting("sync_after_days_lastSync", datetime.datetime.now().isoformat())
