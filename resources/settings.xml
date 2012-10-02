@@ -9,7 +9,7 @@
     <category label="1020"><!-- Auto Sync -->
         <setting id="autosync_collection" type="bool" label="Auto update Collection at startup" default="false"/>
         <setting id="autosync_cleancollection" type="bool" label="Auto clean Collection at startup" default="false"/>
-        <setting id="autosync_seenmovies" type="bool" label="Auto sync seen at startup" default="false"/>
+        <setting id="autosync_seen" type="bool" label="Auto sync seen state at startup" default="false"/>
         <setting id="instantUpdateOnWatchMark" type="bool" label="Instantly update Trakt seen mark on (un)watch" default="false"/>
         <setting id="sync_after_plays" type="bool" label="Sync with Trakt after a certain number of plays" default="true"/>
         <setting id="sync_after_plays_num" type="slider" label="amount of plays" range="1,1,40" default="5" option="int"/>
