@@ -1,4 +1,4 @@
 *.pyo
 *.bak
 push.bat
-.idea
+.idea/
