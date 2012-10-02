@@ -72,15 +72,16 @@ class NotificationService(threading.Thread):
                 
                 # Parse recieved notification
                 data = json.loads(notification)
-                
+
                 # Forward notification to functions
                 if 'method' in data and 'params' in data and 'sender' in data['params'] and data['params']['sender'] == 'xbmc':
                     if data['method'] == 'Player.OnStop':
-                        scrobbler.playbackEnded() # this is using syncIncreasePlayCount already
-                        Debug("pb ended", getSync_after_x())
+                        Debug("pb ended, %s" % getSync_after_x())
+                        scrobbler.playbackEnded(data=data) # this is using syncIncreasePlayCount already
 
                     elif data['method'] == 'Player.OnPlay':
                         if 'data' in data['params'] and 'item' in data['params']['data'] and 'id' in data['params']['data']['item'] and 'type' in data['params']['data']['item']:
+                            #fixme: look here for current position?
                             scrobbler.playbackStarted(data['params']['data'])
                     elif data['method'] == 'Player.OnPause':
                         scrobbler.playbackPaused()

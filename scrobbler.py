@@ -95,7 +95,7 @@ class Scrobbler(threading.Thread):
             Debug("[Scrobbler] Paused after: "+str(self.watchedTime))
             self.startTime = 0
 
-    def playbackEnded(self):
+    def playbackEnded(self, data=None):
         if self.startTime <> 0:
             if self.curVideo == None:
                 Debug("[Scrobbler] Warning: Playback ended but video forgotten")
@@ -104,7 +104,7 @@ class Scrobbler(threading.Thread):
             self.pinging = False
             if self.watchedTime <> 0:
                 if 'type' in self.curVideo and 'id' in self.curVideo:
-                    self.check()
+                    self.check(data=data)
                     ratingCheck(self.curVideo, self.watchedTime, self.totalTime, self.playlistLength)
 
                 self.watchedTime = 0
@@ -161,20 +161,30 @@ class Scrobbler(threading.Thread):
             if responce != None:
                 Debug("[Scrobbler] Scrobble responce: "+str(responce));
 
-    def check(self):
+    def check(self, data=None):
         __settings__ = xbmcaddon.Addon( "script.GottWieGutTraktDes" ) #read settings again, encase they have changed
         scrobbleMinViewTimeOption = __settings__.getSetting("scrobble_min_view_time")
         sync_after_plays_considered_seen = __settings__.getSetting("sync_after_plays_considered_seen")
-        watchedPerc = (self.watchedTime/self.totalTime)*100
 
-        if watchedPerc>=float(sync_after_plays_considered_seen):
-            if getSync_after_x():
-                # we've played a file and consider it seen
-                syncIncreasePlayCount()
-                Debug("syncing")
-                syncAfterX()
+        if self.curVideo:
+            if self.curVideo['type'] == 'movie':
+                match = getMovieDetailsFromXbmc(self.curVideo['id'], ['runtime', 'resume'])
 
-        if watchedPerc>=float(scrobbleMinViewTimeOption):
+            elif self.curVideo['type'] == 'episode':
+                match = getEpisodeDetailsFromXbmc(self.curVideo['id'], ['runtime', 'resume'])
+
+            if match:
+                watchedPerc = match["resume"]["position"] / float(match["resume"]["total"]) * 100
+
+                Debug("Checking watchedPerc %s/%s %s/%s" % (match["resume"]["position"], float(match["resume"]["total"]), watchedPerc, float(sync_after_plays_considered_seen)))
+                if watchedPerc>=float(sync_after_plays_considered_seen) and self.watchedTime >= 10:
+                    if getSync_after_x():
+                        # we've played a file and consider it seen
+                        syncIncreasePlayCount()
+                        Debug("syncing")
+                        syncAfterX()
+
+        if int(100*self.watchedTime/self.totalTime)>=float(scrobbleMinViewTimeOption):
             self.scrobble()
 
         else:

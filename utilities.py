@@ -963,7 +963,7 @@ def scrobbleEpisodeOnTrakt(tvdb_id, title, year, season, episode, duration, perc
 
 
 def syncIncreasePlayCount():
-    sync_after_plays_count += 1
+    sync_after_plays_count = getSync_after_plays_count() + 1
     __settings__.setSetting("sync_after_plays_count", str(sync_after_plays_count))
     Debug("updated playcount to %s" % sync_after_plays_count)
 
