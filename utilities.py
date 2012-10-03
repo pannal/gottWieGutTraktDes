@@ -63,6 +63,12 @@ def getInstantUpdateOnWatchMark():
 
     return instantUpdateOnWatchMark == "true"
 
+def getInstantOnlyOnUnwatchMark():
+    __settings__ = xbmcaddon.Addon( "script.GottWieGutTraktDes" )
+    instantOnlyOnUnwatchMark = __settings__.getSetting("instantOnlyOnUnwatchMark")
+
+    return instantOnlyOnUnwatchMark == "true"
+
 
 def getSync_after_days_num():
     __settings__ = xbmcaddon.Addon( "script.GottWieGutTraktDes" )

@@ -97,7 +97,7 @@ class NotificationService(threading.Thread):
                                 syncAfterX()
 
                             Debug("instantUpdateOnWatchMark: %s" % getInstantUpdateOnWatchMark())
-                            if getInstantUpdateOnWatchMark():
+                            if getInstantUpdateOnWatchMark() or data['params']['data']["playcount"] == 0 and getInstantOnlyOnUnwatchMark():
                                 instantSyncPlayCount(data)
 
                     elif data['method'] == 'System.OnQuit':
