@@ -15,11 +15,11 @@
         <setting id="instantOnlyOnUnwatchMark" type="bool" label="only do this on unwatch" default="true" enable="eq(-1,true)"/>
         <setting type="sep" />
         <setting id="sync_after_plays" type="bool" label="Sync with Trakt after a certain number of plays" default="true"/>
-        <setting id="sync_after_plays_num" type="slider" label="amount of plays" range="1,1,40" default="5" option="int" enable="eq(-1,true)"/>
+        <setting id="sync_after_plays_num" type="slider" label="amount of plays" range="1,1,40" default="10" option="int" enable="eq(-1,true)"/>
         <setting id="sync_after_plays_count" type="text" label="current" default="" visible="true" enable="eq(-2,true)"/>
         <setting type="sep" />
         <setting id="sync_after_days" type="bool" label="Sync with Trakt after a days passed without sync" default="true"/>
-        <setting id="sync_after_days_num" type="slider" label="amount of days" range="1,1,30" default="3" option="int" enable="eq(-1,true)"/>
+        <setting id="sync_after_days_num" type="slider" label="amount of days" range="1,1,30" default="7" option="int" enable="eq(-1,true)"/>
         <setting id="sync_after_days_lastSync" type="text" label="current" default="" visible="true" enable="eq(-2,true)"/>
     </category>
     <category label="1030"><!-- Rating -->
