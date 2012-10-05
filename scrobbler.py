@@ -25,7 +25,6 @@ debug = __settings__.getSetting( "debug" )
 
 headers = {"Content-type": "application/x-www-form-urlencoded", "Accept": "text/plain"}
 
-from extendedSettings import *
 
 class Scrobbler(threading.Thread):
     totalTime = 1
