@@ -532,7 +532,7 @@ def cleanTVShowCollection(daemon=False):
 
 # updates seen movies on trakt
 def syncSeenMovies(daemon=False):
-    noBugging = bool(__settings__.getSetting( "noBugging" ))
+    noBugging = getNoBugging()
     if not daemon:
         progress = xbmcgui.DialogProgress()
         progress.create("Abgetrakt", __language__(1300).encode( "utf-8", "ignore" )) # Checking XBMC Database for new seen Movies
@@ -704,7 +704,7 @@ def syncSeenMovies(daemon=False):
 
 # syncs seen tvshows between trakt and xbmc (no unlibrary)
 def syncSeenTVShows(daemon=False):
-    noBugging = bool(__settings__.getSetting( "noBugging" ))
+    noBugging = getNoBugging()
     if not daemon:
         progress = xbmcgui.DialogProgress()
         progress.create("Abgetrakt", __language__(1143).encode( "utf-8", "ignore" )) # Checking XBMC Database for new seen Episodes

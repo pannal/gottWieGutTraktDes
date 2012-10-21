@@ -120,9 +120,9 @@ def getSync_after_days():
     __settings__ = xbmcaddon.Addon( "script.GottWieGutTraktDes" )
     return __settings__.getSetting("sync_after_days") == "true"
 
-def getNoPopups():
+def getNoBugging():
     __settings__ = xbmcaddon.Addon( "script.GottWieGutTraktDes" )
-    return __settings__.getSetting("noPopups") == "true"
+    return __settings__.getSetting( "noBugging" ) == "true"
 
 #instantUpdateOnWatchMark = getInstantUpdateOnWatchMark()
 #sync_after_plays = getSync_after_plays()
