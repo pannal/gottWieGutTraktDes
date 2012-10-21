@@ -88,12 +88,13 @@ class NotificationService(threading.Thread):
                     elif data['method'] == 'VideoLibrary.OnUpdate':
                         Debug("OnUpdate %s" % data)
                         if 'data' in data['params'] and 'playcount' in data['params']['data']:
+                            noPopups = getNoPopups()
                             # 'playcount' in data indicates that playcount has changed. so we received a seen status on the item
                             if getSync_after_x() and data['params']['data']["playcount"] >= 1:
                                 # we've played a file and consider it seen
                                 syncIncreasePlayCount()
                                 Debug("syncing, playcount: %s" % data['params']['data']["playcount"])
-                                syncAfterX()
+                                syncAfterX(daemon=noPopups)
 
                             onlyOnUnwatchMark = getInstantOnlyOnUnwatchMark()
                             Debug("instantUpdateOnWatchMark: %s, %s" % (getInstantUpdateOnWatchMark(), onlyOnUnwatchMark))

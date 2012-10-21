@@ -146,6 +146,7 @@ class Scrobbler(threading.Thread):
         scrobbleEpisodeOption = __settings__.getSetting("scrobble")
         
         if self.curVideo['type'] == 'movie' and scrobbleMovieOption == 'true':
+            Debug("[Scrobbler] Scrobbling movie!")
             match = getMovieDetailsFromXbmc(self.curVideo['id'], ['imdbnumber','title','year'])
             if match == None:
                 return
@@ -153,6 +154,7 @@ class Scrobbler(threading.Thread):
             if responce != None:
                 Debug("[Scrobbler] Scrobble responce: "+str(responce));
         elif self.curVideo['type'] == 'episode' and scrobbleEpisodeOption == 'true':
+            Debug("[Scrobbler] Scrobbling episode!")
             match = getEpisodeDetailsFromXbmc(self.curVideo['id'], ['showtitle', 'season', 'episode'])
             if match == None:
                 return
