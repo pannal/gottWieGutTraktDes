@@ -53,6 +53,7 @@ def getSyncAfterDaysLastSync():
     except:
         Debug("lastSync setting was wrong, using now")
         sync_after_days_lastSync = datetime.datetime.now()
+        __settings__.setSetting("sync_after_days_lastSync", sync_after_days_lastSync.isoformat())
     return sync_after_days_lastSync
 
 
@@ -104,6 +105,7 @@ def getSync_after_plays_count():
     except:
         Debug("sync_after_plays_count setting was wrong, using default")
         sync_after_plays_count = 0
+        __settings__.setSetting("sync_after_plays_count", str(sync_after_plays_count))
 
     return sync_after_plays_count
 
@@ -135,6 +137,7 @@ def getNoBugging():
 
 
 def Debug(msg, force=False):
+    global debug
     if (debug == 'true' or force):
         try:
             print "GottWieGutTraktDes: " + msg
