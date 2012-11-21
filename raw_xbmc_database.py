@@ -41,8 +41,9 @@ def _findXbmcDb():
     name = 'myvideo'
     user = None
     passwd = None
-    version = re.findall( "<field>((?:[^<]|<(?!/))*)</field>", xbmc.executehttpapi("QueryVideoDatabase(SELECT idVersion FROM version)"),)[0]
-    Debug(version)
+    #version = re.findall( "<field>((?:[^<]|<(?!/))*)</field>", xbmc.executehttpapi("QueryVideoDatabase(SELECT idVersion FROM version)"),)[0]
+    version = xbmc.getInfoLabel('System.BuildVersion') 
+    Debug("Version: %s" % version, True)
     if not os.path.exists(xbmc.translatePath("special://userdata/advancedsettings.xml")):
         type = 'sqlite3'
     else:
