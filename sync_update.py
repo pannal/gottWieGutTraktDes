@@ -733,7 +733,11 @@ def syncSeenTVShows(daemon=False):
                 xbmcgui.Dialog().ok("Abgetrakt", __language__(1134).encode( "utf-8", "ignore" )) # Progress Aborted
                 break
         
-        seasons = getSeasonsFromXBMC(xbmc_tvshows['tvshows'][i])
+        try:
+            seasons = getSeasonsFromXBMC(xbmc_tvshows['tvshows'][i])
+        except IndexError:
+            continue
+
         try:
             tvshow['title'] = xbmc_tvshows['tvshows'][i]['title']
             tvshow['year'] = xbmc_tvshows['tvshows'][i]['year']
@@ -858,7 +862,7 @@ def syncSeenTVShows(daemon=False):
     for i in range(0, xbmc_tvshows['limits']['total']):
         try:
             xbmc_tvshows_tvdbid[xbmc_tvshows['tvshows'][i]['imdbnumber']] = xbmc_tvshows['tvshows'][i]
-        except KeyError:
+        except (KeyError, IndexError):
             continue
 
     set_as_seen = []
